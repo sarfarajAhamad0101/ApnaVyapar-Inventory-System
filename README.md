@@ -13,7 +13,7 @@ A complete Inventory and Billing Management System built using Python and Flask,
 
 ### 🛠️ Tech Stack:
 * **Backend:** Python (Flask)
-* **Frontend:** HTML5, CSS3, JavaScript
+* **Frontend:** HTML5, CSS3, 
 * **Database:** SQLite (or your database name)
 
 ### 📈 Future Goals:
