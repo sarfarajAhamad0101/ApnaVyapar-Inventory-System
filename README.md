@@ -1,5 +1,5 @@
 # ApnaVyapar-Inventory-System
-A complete Inventory and Billing Management System built using Python and Flask, designed to help small businesses handle GST, sales, and stock tracking efficiently.
+A complete Inventory and Billing Management System built using Python and Flask, designed to help small businesses handle GST,Discount sales, and stock tracking efficiently.
 
 # 🚀 ApnaVyapar - Smart Billing Solution
 
