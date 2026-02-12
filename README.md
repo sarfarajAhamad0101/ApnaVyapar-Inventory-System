@@ -2,6 +2,18 @@ A complete Inventory and Billing Management System built using Python and Flask,
 
 # 🚀 ApnaVyapar - Smart Billing Solution
 
+# 📦 Apna Vyapar - Inventory Management System
+
+[![Live Demo](https://img.shields.io/badge/DEMO-Click%20Here-brightgreen?style=for-the-badge&logo=render)](https://apnavyapar.onrender.com)
+
+---
+
+### 🌐 Live Demo
+Aap is project ka live version yahan dekh sakte hain: 
+👉 **[Apna Vyapar - Live Website](https://apnavyapar.onrender.com)**
+
+---
+
 **ApnaVyapar** is a web-based application designed to simplify business operations for small and medium-sized shops. It helps in managing inventory, generating bills, and tracking daily profits.
 
 ### ✨ Key Features:
