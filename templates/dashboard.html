@@ -1,0 +1,77 @@
+<h2>📊 ApnaVyapar Dashboard</h2>
+
+<a href="/add" style="
+    display:inline-block;
+    padding:8px 14px;
+    background:#4CAF50;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+    font-weight:bold;
+">
+➕ Add New Product
+</a>
+
+<br><br>
+
+
+<!-- ================= PRODUCT LIST ================= -->
+<table border="1" cellpadding="8" width="100%">
+<tr>
+    <th>Product</th>
+    <th>Purchase ₹</th>
+    <th>Sell ₹</th>
+    <th>Stock</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for p in products %}
+<tr>
+    <td>{{ p[1] }}</td>
+    <td>₹{{ p[2] }}</td>
+    <td>₹{{ p[3] }}</td>
+    <td>{{ p[4] }}</td>
+    <td>
+        {% if p[5] == 'LOW' %}
+            <span style="color:red; font-weight:bold;">🔴 Low Stock</span>
+        {% else %}
+            <span style="color:green; font-weight:bold;">🟢 OK</span>
+        {% endif %}
+    </td>
+    <td>
+        <a href="/sell?pid={{ p[0] }}">💰 Sell</a> |
+        <a href="/delete/{{ p[0] }}" onclick="return confirm('Delete product?')">❌ Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<br><hr><br>
+
+<!-- ================= STOCK MANAGEMENT ================= -->
+<h2>📦 Product Stock Management</h2>
+
+<table border="1" cellpadding="8" width="100%">
+<tr>
+    <th>Product</th>
+    <th>Current Stock</th>
+    <th>Update Stock</th>
+</tr>
+
+{% for p in products %}
+<tr>
+    <td>{{ p[1] }}</td>
+    <td><b>{{ p[4] }}</b></td>
+    <td>
+        <form action="/update_stock" method="post" style="display:inline;">
+            <input type="hidden" name="pid" value="{{ p[0] }}">
+            <input type="number" name="qty" min="1" required>
+
+            <button type="submit" name="action" value="add">➕ Add</button>
+            <button type="submit" name="action" value="reduce">➖ Reduce</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+</table>

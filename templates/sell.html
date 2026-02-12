@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell Product</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 40px; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h2 { color: #2c3e50; text-align: center; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #34495e; }
+        input, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #dcdde1; border-radius: 6px; box-sizing: border-box; }
+        .btn-sell { background-color: #27ae60; color: white; border: none; padding: 15px; width: 100%; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 25px; transition: 0.3s; }
+        .btn-sell:hover { background-color: #219150; }
+        .row { display: flex; gap: 15px; }
+        .row div { flex: 1; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🧾 New Sale</h2>
+    <form method="POST" action="/sell">
+        <label>Customer Name</label>
+        <input type="text" name="c_name" placeholder="Enter name" required>
+
+        <label>Mobile Number</label>
+        <input type="text" name="c_mobile" placeholder="Enter mobile" required>
+
+        <label>Select Product</label>
+        <select name="product_id" required>
+            {% for p in products %}
+            <option value="{{p[0]}}">{{p[1]}} (Stock: {{p[5]}}) - ₹{{p[4]}}</option>
+            {% endfor %}
+        </select>
+
+        <div class="row">
+            <div>
+                <label>Quantity</label>
+                <input type="number" name="qty" min="1" value="1" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label>Discount %</label>
+                <input type="number" name="discount" step="0.01" value="0">
+            </div>
+            <div>
+                <label>GST %</label>
+                <input type="number" name="gst" step="0.01" value="0">
+            </div>
+        </div>
+
+        <button type="submit" class="btn-sell">💰 Generate Bill</button>
+    </form>
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="/" style="color: #7f8c8d; text-decoration: none;">⬅ Back to Dashboard</a>
+    </p>
+</div>
+
+</body>
+</html>
