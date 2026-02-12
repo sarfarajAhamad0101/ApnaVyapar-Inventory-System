@@ -1,46 +1,81 @@
-<style>
-    body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { background: #2c3e50; color: white; padding: 12px; }
-    td { padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
-    .alert { color: red; font-weight: bold; animation: blink 1s infinite; }
-    @keyframes blink { 50% { opacity: 0; } }
-    .btn { padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 13px; }
-    .btn-del { background: #e74c3c; color: white; }
-    .btn-add { background: #3498db; color: white; padding: 10px; }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Vyapar Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 10px; margin: 0; }
+        .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        /* Navigation Buttons ko mobile par adjust karne ke liye */
+        .nav-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .btn-add { 
+            flex: 1; min-width: 120px; padding: 12px; text-decoration: none; 
+            border-radius: 5px; font-size: 14px; color: white; text-align: center; font-weight: bold;
+        }
+
+        /* Table ko mobile par scroll karne ke liye wrapper */
+        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 700px; } /* Table chhota nahi hoga scroll hoga */
+        th { background: #2c3e50; color: white; padding: 12px; font-size: 14px; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px; }
+        
+        .alert { color: red; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .btn-del { background: #e74c3c; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 13px; }
+        
+        /* Input boxes ko mobile par touch friendly banane ke liye */
+        input[type="number"] { padding: 5px; border: 1px solid #ccc; border-radius: 3px; }
+        button[name="action"] { padding: 5px 10px; cursor: pointer; font-weight: bold; border: 1px solid #ddd; background: #f9f9f9; }
+    </style>
+</head>
+<body>
 
 <div class="card">
-    <h2>📊 APNA VYAPAR - Stock Manager</h2>
-    <a href="/add_product" class="btn-add">➕ Add New Item</a>
-    <a href="/sell" style="background: #27ae60;" class="btn-add">🧾 New Sale</a>
-    <a href="/customers" style="background: #8e44ad;" class="btn-add">👥 History</a>
+    <h2 style="text-align: center;">📊 APNA VYAPAR - Stock Manager</h2>
+    
+    <div class="nav-buttons">
+        <a href="/add_product" class="btn-add" style="background: #3498db;">➕ Add New</a>
+        <a href="/sell" class="btn-add" style="background: #27ae60;">🧾 New Sale</a>
+        <a href="/customers" class="btn-add" style="background: #8e44ad;">👥 History</a>
+    </div>
 
-    <table>
-        <tr>
-            <th>Name</th><th>Barcode</th><th>Purchase Price</th><th>Sell Price</th><th>Stock</th><th>Date</th><th>Action</th>
-        </tr>
-        {% for p in products %}
-        <tr>
-            <td>{{p[1]}}</td>
-            <td><code>{{p[2]}}</code></td>
-            <td>₹{{p[3]}}</td>
-            <td>₹{{p[4]}}</td>
-            <td class="{{ 'alert' if p[5] <= 5 else '' }}">
-                {{p[5]}} {% if p[5] <= 5 %} <br><small>LOW</small> {% endif %}
-            </td>
-            <td>{{p[6]}}</td>
-            <td>
-                <form action="/update_stock" method="post" style="display:inline;">
-                    <input type="hidden" name="pid" value="{{p[0]}}">
-                    <input type="number" name="qty" value="1" style="width:35px">
-                    <button name="action" value="add" style="color:green">+</button>
-                    <button name="action" value="reduce" style="color:orange">-</button>
-                </form>
-                | <a href="/delete_product/{{p[0]}}" class="btn btn-del" onclick="return confirm('Pakka delete karna hai?')">🗑️</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th><th>Barcode</th><th>Purchase</th><th>Sell</th><th>Stock</th><th>Date</th><th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in products %}
+                <tr style="{{ 'background: #fff5f5;' if p[5] <= 5 else '' }}">
+                    <td>{{p[1]}}</td>
+                    <td><code>{{p[2]}}</code></td>
+                    <td>₹{{p[3]}}</td>
+                    <td>₹{{p[4]}}</td>
+                    <td class="{{ 'alert' if p[5] <= 5 else '' }}">
+                        {{p[5]}} {% if p[5] <= 5 %} <br><small>LOW</small> {% endif %}
+                    </td>
+                    <td>{{p[6]}}</td>
+                    <td>
+                        <form action="/update_stock" method="post" style="display:inline;">
+                            <input type="hidden" name="pid" value="{{p[0]}}">
+                            <input type="number" name="qty" value="1" style="width:40px">
+                            <button name="action" value="add" style="color:green" title="Increase">+</button>
+                            <button name="action" value="reduce" style="color:orange" title="Decrease">-</button>
+                        </form>
+                        | <a href="/delete_product/{{p[0]}}" class="btn-del" onclick="return confirm('Pakka delete karna hai?')">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+</body>
+</html>
